@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+api_key = if idx = ARGV.index('-k')
+  ARGV.delete(ARGV[idx])
+  ARGV.delete(ARGV[idx])
+else
+  ENV['YAHOO_UPCOMING_API_KEY']
+end
+
+frob = if idx = ARGV.index('-f')
+  ARGV.delete(ARGV[idx])
+  ARGV.delete(ARGV[idx])
+else
+  ENV['YAHOO_UPCOMING_API_FROB']
+end
+abort "supply -f your_frob to specify an api frob" unless frob
+
+# When there's no package manager, and i'm too lazy to -Ilib
+p = File.expand_path('../../lib',__FILE__)
+$:.unshift p unless $:.include?(p)
+
+require 'yahoo_upcoming'
+YahooUpcoming.irb(api_key, frob)
